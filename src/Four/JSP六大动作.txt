@@ -1,0 +1,30 @@
+JSP的六大动作
+
+include动作
+     <jsp:include page="引用文件的地址" flush="false"></jsp:include>
+     include动作引入jsp文件，在转换时期是没有被引入的，只有当执行到include代码位置的时候，
+     才会被动态的编译载入。
+
+
+userBean、setProperty、getProperty
+
+    <jsp:useBean id="别名" class="全限定名称" scope="作用范围"></jsp:useBean>
+    <jsp:setProperty property="属性名称" name="别名" value="值"/>
+    <jsp:getProperty property="属性名称" name="别名"/>
+
+forward动作：转发
+
+param动作：参数
+
+    http://localhost:8080/07_jsp/地址?key=值&key=值
+
+    <jsp:forward page="转发地址">
+        <jsp:param value="值" name="key"/>
+        <jsp:param value="值" name="key"/>
+    </jsp:forward>
+
+include指令与include动作的区别
+
+include动作在转换为Java文件时，引入的文件不会被编译，只有客户端请求到生成的Servlet文件时，才会被动态的编译载入
+
+include指令是在JSP程序的转换十七，将引入的文件内容嵌入，然后统一进行编译。

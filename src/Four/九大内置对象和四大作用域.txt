@@ -1,0 +1,83 @@
+内置对象
+九大内置对象
+内置对象(又叫隐含对象)，就是在jsp中，不需要创建(由服务器<容器>来创建),可以直接使用的对象。
+
+out: out对象是JSPWriter类的实例，是向客户端输出内容常用的对象。
+类型：JSPWriter
+作用：向客户端进行响应的字符打印流
+
+request（四大域对象之一）****:
+    类型：HttpServletRequest
+    作用：请求对象，包含了请求的信息
+
+    getParameter("key"); 获取用户提交的表单信息
+    setCharacterEncoding("编码集"); 设置请求编码，防止乱码
+    setAttribute("key","value");将数据保存到request范围内的变量
+    forward(String url); 转发
+    getParameterValues(String name)； 返回包含参数name的所有值得数组
+
+
+response ****:
+    类型：HttpServletResponse
+    作用：响应对象，用来给用户进行响应
+
+    addCookie() 将一个cookie对象发送到客户端
+    sendRedirect(String url)； 重定向
+
+session(四大域对象之一):
+    类型:HttpSession
+    作用：会话对象，用来进行数据得共享和会话得跟踪
+
+    setMaxInactiveInterval(int num) 设置session对象得有效活动得时间
+    invalidate() 销毁当前得session
+
+application(四大域对象之一):
+    类型：ServletContext
+    作用：全局得Servlet上下文对象，每个应用只有一个，从应用启动，就创建了，直到应用消亡，对象才被释放。
+
+config:
+    类型：ServletConfig
+    作用：Servlet配置对象，较少使用
+
+page:
+    类型：Object
+    作用：指的是当前JSP页面对象
+
+pageContext(四大域对象之一):
+    类型：PageContext
+    作用：页面得上下文，用来在一个页面中进行数据得共享与通讯
+
+exception:
+    类型：Throwable
+    作用：常用于错误处理页面，用来收集其他页面产生得错误信息，只有isErrorPage="true"时候，才会产生这个对象！
+四大作用域
+为了在页面、请求、和用户之间传递和共享数据，JSP提供了四个不同得作用域：pageContext(页面作用域)、
+request(请求作用域)、session(会话作用域)、application(应用程序作用域)，这些作用域规定了数据可以
+传递和共享得范围，以及数据存活时间。
+
+pageContext ：一个页面
+
+
+request     ：一个请求  (范围：可能包含多个页面)    
+
+
+session     ： 一次会话  (范围：可能包含多次请求)       默认数据存储时间30分钟
+
+
+application ： 一次服务  (范围：包含多次会话)
+
+
+常用方法：
+    setAttribute(key,value);
+
+    Object value = getAttribute(key);
+
+    removeAttribute(key);
+请求转发和请求重定向得区别
+    请求重定向：客户端行为，response.sendRedirect("redirect.jsp"); 从本质上讲等同于两次请求，
+    前一次得请求对象不会保存，地址栏得URL地址会改变
+
+
+
+    请求转发：服务器行为，request.getRequestDispatcher("forward.jsp").forward(request, response);
+    是一次请求，转发后请求对象会保存，地址栏和URL地址不会改变

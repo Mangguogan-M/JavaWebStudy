@@ -1,0 +1,77 @@
+
+Servlet
+Servlet概述
+
+Servlet就是运行在服务器(Tomcat)上的Java程序。
+Servlet用来处理客户端请求的，以及负责对客户端的响应。
+Servlet默认情况下是单例模式的，每次用户访问，都是开启一个新的线程，调用service方法处理
+
+如何使用Servlet
+
+1. 先引入servlet-api.jar
+2. 编写一个Java类，继承HttpServlet
+3. 重写service(request,response)方法
+4. 在service方法中处理请求，以及进行响应
+
+问题： 
+    请求如何找到我的servlet？
+
+    解决方案如下：
+
+Servlet 配置到web.xml
+
+配置到web.xml的作用，让tomcat帮我们创建对象，并映射地址，当地址匹配，由tomcat调用这个
+对象的service方法进行处理！
+
+地址： 
+    例如http://ip地址:端口号/项目名称/地址
+
+    http://localhost:8080/08_servlet/login
+
+1.将servlet配置到web.xml 并起别名
+<servlet>
+<servlet-name>任意标识符</servlet-name>
+<servlet-class>类的全称(包名+类名)</servlet-class>
+</servlet>
+
+ 2.根据别名，映射一个网址
+<servlet-mapping>
+<servlet-name>与第一步标识一致</servlet-name>
+<!-- 
+    访问servlet的规则：
+        http://ip地址:端口号/项目名称/地址
+ -->
+<url-pattern>/地址</url-pattern>
+<!-- 
+    /   拦截没有后缀的请求
+
+    /*  拦截所有请求
+
+    *.do 拦截所有以.do结尾的请求
+ -->
+</servlet-mapping>
+
+常用方法
+
+request  请求接收
+    request.setCharacterEncoding("UTF-8");  设置请求接收的编码集   什么时候用   接收参数乱码时要设置，get请求不好使
+    request.getParameter("key");            接收请求参数
+    request.getParameterMap();              请求接收参数，封装到map集合中   ，通过  map.get(key);
+    request.setAttribute("key", value);     将数据设置到request作用域中       
+    request.getRequestDispatcher("转发的页面 例如: login.jsp").forward(request, response);  转发 
+    HttpSession session = request.getSession();             获取session
+    request.getServletPath();       获取servlet请求路径  比如发送的请求是  http://localhost:8080/08_servlet/login   那么获取的就是： /login
+
+
+
+请求响应    
+    response.setCharacterEncoding("UTF-8");     请求响应的编码格式
+
+    response.sendRedirect(重定向的请求或页面""); 重定向
+
+
+    //给客户端响应
+    PrintWriter out = response.getWriter();
+            out.write("<h1>登录页面</h1>");
+            out.print("a");
+
